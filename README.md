@@ -12,6 +12,9 @@ make
 ./islc/islc < ../interpstaticlang/examples/main.txt
 ~~~ 
 
+## Project
+- islc: compiling the code into intermediate form that will be run by interpreter.
+
 ## Goal
 * String manipulation
 * File reading
