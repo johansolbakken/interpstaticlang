@@ -1,12 +1,21 @@
 #include <iostream>
 
-#include "lexer/lexer.h"
+#include "parser/nodestore.h"
+
+extern int yyparse();
+
+int yyerror(const char *s)
+{
+    std::cout << s << std::endl;
+    return 0;
+}
+
+islc::NodeStore *nodeStore = nullptr;
 
 int main(int argc, char **argv)
 {
-    islc::Lexer lexer("func main() { println(\"Hello, World!\") }");
-    for (auto token = lexer.lex(); token.has_value() && token->type != islc::TokenType::Eof; token = lexer.lex())
-    {
-        std::cout << token.value().toString() << std::endl;
-    }
+    nodeStore = new islc::NodeStore();
+    yyparse();
+    delete nodeStore;
+    return 0;
 }

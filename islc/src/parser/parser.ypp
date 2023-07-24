@@ -1,0 +1,54 @@
+%{
+extern int yylex();
+extern int yylineno;
+extern const char *yytext;
+extern int yyerror(const char *s);
+
+#include <iostream>
+#include "parser/node.h"
+#include "parser/nodestore.h"
+
+extern islc::NodeStore* nodeStore;
+%}
+
+%token FUNCTION IDENTIFIER PRINTLN STRING_LITERAL
+%left '+' '-'
+
+%%
+
+program : global_list {
+
+};
+
+global_list : global_list global_declaration {
+
+} | global_declaration {
+
+};
+
+global_declaration : function_declaration {
+
+};
+
+function_declaration : FUNCTION IDENTIFIER '(' ')' '{' statement_list '}' {
+
+};
+
+statement_list : statement_list statement {
+
+} | statement {
+
+};
+
+statement : println_statement {
+
+};
+
+println_statement : PRINTLN '(' string_literal ')' {
+};
+
+string_literal : STRING_LITERAL {
+    $$ = nodeStore->addNode(islc::NodeType::StringData, yytext, {});
+};
+
+%%

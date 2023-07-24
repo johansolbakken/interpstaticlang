@@ -1,0 +1,22 @@
+%{
+#include "parser.hpp"
+%}
+
+WHITESPACE          [ \t\r\n]
+STRING              \"[^\"]*\"
+IDENTIFIER          [a-zA-Z_][a-zA-Z0-9_]*
+
+%%
+
+{WHITESPACE}        { /* ignore whitespace */ }
+{STRING}            { return STRING_LITERAL; }
+func                { return FUNCTION; }
+println             { return PRINTLN; }
+{IDENTIFIER}        { return IDENTIFIER; }
+.                   { return yytext[0]; }
+
+%%
+
+int yywrap() {
+    return 1;
+}
