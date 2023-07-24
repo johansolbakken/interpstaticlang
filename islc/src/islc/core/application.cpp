@@ -1,12 +1,8 @@
 #include "application.h"
 
-#include "islc/parser/nodestore.h"
+#include "islc/core/base.h"
 
-#include <iostream>
-
-extern int yyparse();
-
-islc::NodeStore *nodeStore = nullptr;
+#include "islc/parser/parsecommand.h"
 
 namespace islc
 {
@@ -19,14 +15,11 @@ namespace islc
 
     void Application::run()
     {
-        nodeStore = new NodeStore();
-        yyparse();
-        delete nodeStore;
-        nodeStore = nullptr;
+        ParseCommand::parse();
     }
 
     void Application::error(const std::string &message) const
     {
-        std::cout << message << std::endl;
+        fmt::print(fmt::fg(fmt::color::red), "{}\n", message);
     }
 }

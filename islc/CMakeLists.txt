@@ -20,6 +20,7 @@ add_executable(islc src/islc.cpp
     src/islc/parser/node.h src/islc/parser/node.cpp
     src/islc/parser/nodestore.h src/islc/parser/nodestore.cpp
     src/islc/parser/bisoncontext.cpp
+    src/islc/parser/parsecommand.h src/islc/parser/parsecommand.cpp
 
     ${BISON_parser_OUTPUTS} 
     ${FLEX_lexer_OUTPUTS}

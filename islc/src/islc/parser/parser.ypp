@@ -6,7 +6,7 @@ extern int yyerror(const char *s);
 
 #include "islc/parser/nodestore.h"
 
-extern islc::NodeStore* nodeStore;
+islc::NodeStore* nodeStore = nullptr;
 %}
 
 %token FUNCTION IDENTIFIER PRINTLN STRING_LITERAL
