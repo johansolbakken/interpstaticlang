@@ -22,6 +22,8 @@ add_executable(islc src/islc.cpp
     src/islc/parser/bisoncontext.cpp
     src/islc/parser/parsecommand.h src/islc/parser/parsecommand.cpp
 
+    src/islc/debug/nodegraphwiz.h src/islc/debug/nodegraphwiz.cpp
+
     ${BISON_parser_OUTPUTS} 
     ${FLEX_lexer_OUTPUTS}
 )

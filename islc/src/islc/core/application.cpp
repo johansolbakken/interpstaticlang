@@ -4,6 +4,8 @@
 
 #include "islc/parser/parsecommand.h"
 
+#include "islc/debug/nodegraphwiz.h"
+
 namespace islc
 {
     Application *Application::s_instance = nullptr;
@@ -20,11 +22,7 @@ namespace islc
         auto ast = ParseCommand::root();
         ParseCommand::end();
 
-        if (ast == nullptr)
-        {
-            error("No AST generated");
-            return;
-        }
+        NodeGraphwiz::printAst(ast, "ast.png");
     }
 
     void Application::error(const std::string &message) const

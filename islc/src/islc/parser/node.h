@@ -19,6 +19,8 @@ namespace islc
         IdentifierData
     };
 
+    std::string toString(NodeType type);
+
     struct Node
     {
         NodeType type;
