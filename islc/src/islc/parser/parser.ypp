@@ -44,7 +44,7 @@ statement : println_statement {
 };
 
 println_statement : PRINTLN '(' string_literal ')' {
-    $$ = nodeStore->addNode(islc::NodeType::PrintLnStatement, yytext, {$3});
+    $$ = nodeStore->addNode(islc::NodeType::PrintLnStatement, "", {$3});
 };
 
 identifier : IDENTIFIER {

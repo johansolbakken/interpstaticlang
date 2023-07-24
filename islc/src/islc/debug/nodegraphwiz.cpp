@@ -25,6 +25,18 @@ namespace islc
                 ss << "    " << parentId << " -> " << nodeId << ";\n";
             }
 
+            if (node->value != "")
+            {
+                int valueId = ++id;
+                auto value = node->value;
+                if (value[0] == '"' && value[value.size() - 1] == '"')
+                {
+                    value = value.substr(1, value.size() - 2);
+                }
+                ss << "    " << valueId << " [label=\"" << value << "\"];\n";
+                ss << "    " << nodeId << " -> " << valueId << ";\n";
+            }
+
             for (auto &child : node->children)
             {
                 writeNode(child, nodeId);
