@@ -15,7 +15,8 @@ namespace islc
         Statement,
         StatementList,
         PrintLnStatement,
-        StringData
+        StringData,
+        IdentifierData
     };
 
     struct Node

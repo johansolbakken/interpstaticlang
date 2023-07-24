@@ -17,34 +17,40 @@ extern islc::NodeStore* nodeStore;
 %%
 
 program : global_list {
-
+    $$ = nodeStore->addNode(islc::NodeType::Program, "", {$1});
+    nodeStore->setRoot($$);
 };
 
 global_list : global_list global_declaration {
-
+    $$ = nodeStore->addNode(islc::NodeType::GlobalList, "", {$1, $2});
 } | global_declaration {
-
+    $$ = $1;
 };
 
 global_declaration : function_declaration {
-
+    $$ = $1;
 };
 
-function_declaration : FUNCTION IDENTIFIER '(' ')' '{' statement_list '}' {
-
+function_declaration : FUNCTION identifier '(' ')' '{' statement_list '}' {
+    $$ = nodeStore->addNode(islc::NodeType::FunctionDeclaration, "", {$2, $6});
 };
 
 statement_list : statement_list statement {
-
+    $$ = nodeStore->addNode(islc::NodeType::StatementList, "", {$1, $2});
 } | statement {
-
+    $$ = $1;
 };
 
 statement : println_statement {
-
+    $$ = $1;
 };
 
 println_statement : PRINTLN '(' string_literal ')' {
+    $$ = nodeStore->addNode(islc::NodeType::PrintLnStatement, yytext, {$3});
+};
+
+identifier : IDENTIFIER {
+    $$ = nodeStore->addNode(islc::NodeType::IdentifierData, yytext, {});
 };
 
 string_literal : STRING_LITERAL {

@@ -13,6 +13,8 @@ ADD_FLEX_BISON_DEPENDENCY(lexer parser)
 
 add_executable(islc src/islc.cpp
 
+    src/core/application.h src/core/application.cpp
+
     src/parser/node.h src/parser/node.cpp
     src/parser/nodestore.h src/parser/nodestore.cpp
 
