@@ -15,7 +15,16 @@ namespace islc
 
     void Application::run()
     {
+        ParseCommand::begin();
         ParseCommand::parse();
+        auto ast = ParseCommand::root();
+        ParseCommand::end();
+
+        if (ast == nullptr)
+        {
+            error("No AST generated");
+            return;
+        }
     }
 
     void Application::error(const std::string &message) const

@@ -20,8 +20,10 @@ namespace islc
 
     void ParseCommand::parse()
     {
-        begin();
         yyparse();
-        end();
+    }
+
+    std::shared_ptr<Node> ParseCommand::root() {
+        return nodeStore->getRoot();
     }
 }
