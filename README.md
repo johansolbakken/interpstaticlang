@@ -45,3 +45,7 @@ pub func Dog::bark() {
 ~~~
 let dog = new Dog()
 ~~~
+
+# Goal
+* String manipulation
+* File reading
