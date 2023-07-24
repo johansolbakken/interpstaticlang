@@ -2,21 +2,35 @@
 
 "I just want to be able to make objects and interfaces, but I dont want to write all the assembly."
 
-## Entry point
+## Build and run
+~~~bash
+git clone --recursive https://github.com/johansolbakken/interpstaticlang
+mkdir interpstaticlang-build
+cd interpstaticlang-build
+cmake ../interpstaticlang
+make
+./islc/islc < ../interpstaticlang/examples/main.txt
+~~~ 
+
+## Goal
+* String manipulation
+* File reading
+
+### Entry point
 ~~~
 func main(args: string[]) {
     
 } 
 ~~~
 
-## Function
+### Function
 ~~~
 func add(a: int, b: int): int {
     return a + b
 }
 ~~~
 
-## Builtin types
+### Builtin types
 ~~~
 int (64-bit)
 string
@@ -24,7 +38,7 @@ float
 bool
 ~~~
 
-## Classes
+### Classes
 ~~~
 pub class Dog {
     age: int
@@ -41,11 +55,7 @@ pub func Dog::bark() {
 }
 ~~~
 
-## Variables
+### Variables
 ~~~
 let dog = new Dog()
 ~~~
-
-# Goal
-* String manipulation
-* File reading
