@@ -1,0 +1,3 @@
+[submodule "islc/vendor/fmt"]
+	path = islc/vendor/fmt
+	url = git@github.com:fmtlib/fmt.git

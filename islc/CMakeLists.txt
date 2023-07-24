@@ -4,6 +4,8 @@ project(islc)
 
 set(CMAKE_CXX_STANDARD 23)
 
+add_subdirectory(vendor)
+
 find_package(BISON)
 find_package(FLEX)
 
@@ -17,9 +19,11 @@ add_executable(islc src/islc.cpp
 
     src/islc/parser/node.h src/islc/parser/node.cpp
     src/islc/parser/nodestore.h src/islc/parser/nodestore.cpp
+    src/islc/parser/bisoncontext.cpp
 
     ${BISON_parser_OUTPUTS} 
     ${FLEX_lexer_OUTPUTS}
 )
-target_include_directories(islc PRIVATE src)
+target_include_directories(islc PRIVATE src vendor/fmt/include)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
+target_link_libraries(islc PRIVATE fmt::fmt)
