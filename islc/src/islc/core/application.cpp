@@ -1,6 +1,6 @@
 #include "application.h"
 
-#include "parser/nodestore.h"
+#include "islc/parser/nodestore.h"
 
 #include <iostream>
 

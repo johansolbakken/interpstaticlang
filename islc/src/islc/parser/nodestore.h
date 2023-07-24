@@ -1,6 +1,6 @@
 #pragma once
 
-#include "parser/node.h"
+#include "islc/parser/node.h"
 
 namespace islc
 {

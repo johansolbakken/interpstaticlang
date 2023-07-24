@@ -4,9 +4,7 @@ extern int yylineno;
 extern const char *yytext;
 extern int yyerror(const char *s);
 
-#include <iostream>
-#include "parser/node.h"
-#include "parser/nodestore.h"
+#include "islc/parser/nodestore.h"
 
 extern islc::NodeStore* nodeStore;
 %}
