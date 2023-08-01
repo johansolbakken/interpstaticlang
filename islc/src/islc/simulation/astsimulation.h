@@ -11,6 +11,15 @@ namespace islc
 {
     class AstSimulation
     {
+        struct Scope
+        {
+            std::map<std::string, std::string> variables;
+            std::shared_ptr<Scope> parent;
+            static std::shared_ptr<Scope> create(const std::shared_ptr<Scope> &parent = nullptr);
+            bool set(const std::string &name, const std::string& value);
+            std::string get(const std::string &name);
+        };
+
     public:
         AstSimulation(const std::shared_ptr<Node> &root);
         ~AstSimulation() = default;
@@ -24,7 +33,8 @@ namespace islc
 
     private:
         std::shared_ptr<Node> m_root;
-        std::map<std::string, std::shared_ptr<Node>> m_variables;
         std::map<std::string, std::shared_ptr<Node>> m_functions;
+        std::shared_ptr<Scope> m_globalScope;
+        std::shared_ptr<Scope> m_currentScope;
     };
 }

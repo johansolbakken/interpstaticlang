@@ -27,6 +27,7 @@ namespace islc
         {NodeType::In, "In"},
         {NodeType::Expression, "Expression"},
         {NodeType::Range, "Range"},
+        {NodeType::Block, "Block"},
     };
 
     std::string toString(NodeType type)

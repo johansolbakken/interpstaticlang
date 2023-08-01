@@ -22,7 +22,8 @@ namespace islc
         FunctionCall,
         StringData,
         IntData,
-        IdentifierData
+        IdentifierData,
+        Block
     };
 
     std::string toString(NodeType type);

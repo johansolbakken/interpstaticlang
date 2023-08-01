@@ -78,7 +78,7 @@ expression : expression '+' expression {
 };
 
 block : '{' statement_list '}' {
-    $$ = $2;
+    $$ = nodeStore->addNode(islc::NodeType::Block, "", {$2});
 };
 
 function_call : identifier '(' ')' {

@@ -4,6 +4,41 @@
 
 namespace islc
 {
+
+    std::shared_ptr<AstSimulation::Scope> AstSimulation::Scope::create(const std::shared_ptr<Scope> &parent)
+    {
+        auto scope = std::make_shared<Scope>();
+        scope->parent = parent;
+        return scope;
+    }
+
+    bool AstSimulation::Scope::set(const std::string &name, const std::string& value)
+    {
+        if (variables.find(name) != variables.end())
+        {
+            variables[name] = value;
+            return true;
+        }
+        if (parent)
+        {
+            return parent->set(name, value);
+        }
+        return false;
+    }
+
+    std::string AstSimulation::Scope::get(const std::string &name)
+    {
+        if (variables.find(name) != variables.end())
+        {
+            return variables[name];
+        }
+        if (parent)
+        {
+            return parent->get(name);
+        }
+        return "";
+    }
+
     AstSimulation::AstSimulation(const std::shared_ptr<Node> &root)
         : m_root(root)
     {
@@ -11,7 +46,8 @@ namespace islc
 
     void AstSimulation::run()
     {
-        findVariables(m_root);
+        m_globalScope = Scope::create();
+        m_currentScope = m_globalScope;
         findFunctions(m_root);
         if (m_functions.find("main") == m_functions.end())
         {
@@ -19,19 +55,6 @@ namespace islc
             return;
         }
         evaluate(m_functions["main"]);
-    }
-
-    void AstSimulation::findVariables(const std::shared_ptr<Node> &node)
-    {
-        if (node->type == NodeType::GlobalDeclaration)
-        {
-            m_variables[node->children[0]->value] = node;
-        }
-
-        for (auto &child : node->children)
-        {
-            findVariables(child);
-        }
     }
 
     void AstSimulation::findFunctions(const std::shared_ptr<Node> &node)
@@ -49,7 +72,16 @@ namespace islc
 
     void AstSimulation::evaluate(const std::shared_ptr<Node> &node)
     {
-        if (node->type == NodeType::PrintLnStatement)
+        if (node->type == NodeType::Block)
+        {
+            m_currentScope = Scope::create(m_currentScope);
+            for (auto &child : node->children)
+            {
+                evaluate(child);
+            }
+            m_currentScope = m_currentScope->parent;
+        }
+        else if (node->type == NodeType::PrintLnStatement)
         {
             fmt::print("{}\n", node->children[0]->value.substr(1, node->children[0]->value.size() - 2));
         }
