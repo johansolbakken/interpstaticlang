@@ -46,6 +46,15 @@ namespace islc
             fmt::print("{}\n", node->children[0]->value.substr(1, node->children[0]->value.size() - 2));
         }
 
+        if (node->type == NodeType::FunctionCall) {
+            if (m_functions.find(node->children[0]->value) == m_functions.end()) {
+                Application::get().error("Function " + node->children[0]->value + " not found");
+                return;
+            }
+
+            evaluate(m_functions[node->children[0]->value]);
+        }
+
         for (auto &child : node->children) {
             evaluate(child);
         }

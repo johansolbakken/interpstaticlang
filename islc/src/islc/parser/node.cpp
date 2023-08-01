@@ -21,6 +21,7 @@ namespace islc
         {NodeType::PrintLnStatement, "PrintLnStatement"},
         {NodeType::StringData, "StringData"},
         {NodeType::IdentifierData, "IdentifierData"},
+        {NodeType::FunctionCall, "FunctionCall"},
     };
 
     std::string toString(NodeType type)

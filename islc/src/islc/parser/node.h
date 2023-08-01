@@ -15,6 +15,7 @@ namespace islc
         Statement,
         StatementList,
         PrintLnStatement,
+        FunctionCall,
         StringData,
         IdentifierData
     };

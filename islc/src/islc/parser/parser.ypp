@@ -41,10 +41,17 @@ statement_list : statement_list statement {
 
 statement : println_statement {
     $$ = $1;
+}
+| function_call {
+    $$ = $1;
 };
 
 println_statement : PRINTLN '(' string_literal ')' {
     $$ = nodeStore->addNode(islc::NodeType::PrintLnStatement, "", {$3});
+};
+
+function_call : identifier '(' ')' {
+    $$ = nodeStore->addNode(islc::NodeType::FunctionCall, "", {$1});
 };
 
 identifier : IDENTIFIER {
