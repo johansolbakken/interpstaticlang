@@ -24,6 +24,8 @@ add_executable(islc src/islc.cpp
 
     src/islc/debug/nodegraphwiz.h src/islc/debug/nodegraphwiz.cpp
 
+    src/islc/simulation/astsimulation.h src/islc/simulation/astsimulation.cpp
+
     ${BISON_parser_OUTPUTS} 
     ${FLEX_lexer_OUTPUTS}
 )

@@ -6,6 +6,8 @@
 
 #include "islc/debug/nodegraphwiz.h"
 
+#include "islc/simulation/astsimulation.h"
+
 namespace islc
 {
     Application *Application::s_instance = nullptr;
@@ -23,6 +25,9 @@ namespace islc
         ParseCommand::end();
 
         NodeGraphwiz::printAst(ast, "ast.png");
+
+        AstSimulation simulation(ast);
+        simulation.run();
     }
 
     void Application::error(const std::string &message) const
