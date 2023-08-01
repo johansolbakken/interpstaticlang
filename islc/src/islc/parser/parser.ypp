@@ -9,8 +9,11 @@ extern int yyerror(const char *s);
 islc::NodeStore* nodeStore = nullptr;
 %}
 
-%token FUNCTION IDENTIFIER PRINTLN STRING_LITERAL
+%token FUNCTION IDENTIFIER PRINTLN STRING_LITERAL FOR IN INT_LITERAL
 %left '+' '-'
+%left '(' ')'
+%left '{' '}'
+%left ';'
 
 %%
 
@@ -29,8 +32,8 @@ global_declaration : function_declaration {
     $$ = $1;
 };
 
-function_declaration : FUNCTION identifier '(' ')' '{' statement_list '}' {
-    $$ = nodeStore->addNode(islc::NodeType::FunctionDeclaration, "", {$2, $6});
+function_declaration : FUNCTION identifier '(' ')' block {
+    $$ = nodeStore->addNode(islc::NodeType::FunctionDeclaration, "", {$2, $5});
 };
 
 statement_list : statement_list statement {
@@ -39,15 +42,43 @@ statement_list : statement_list statement {
     $$ = $1;
 };
 
-statement : println_statement {
+statement : println_statement ';' {
     $$ = $1;
 }
-| function_call {
+| function_call ';'{
+    $$ = $1;
+}
+| for_statement {
+    $$ = $1;
+}
+| block {
     $$ = $1;
 };
 
 println_statement : PRINTLN '(' string_literal ')' {
     $$ = nodeStore->addNode(islc::NodeType::PrintLnStatement, "", {$3});
+};
+
+for_statement : FOR identifier IN range block {
+    $$ = nodeStore->addNode(islc::NodeType::ForRangeStatement, "", {$2, $4, $5 });
+};
+
+expression : expression '+' expression {
+    $$ = nodeStore->addNode(islc::NodeType::Expression, "+", {$1, $3});
+} | expression '-' expression {
+    $$ = nodeStore->addNode(islc::NodeType::Expression, "-", {$1, $3});
+} | range {
+    $$ = $1;
+} | identifier {
+    $$ = $1;
+} | function_call {
+    $$ = $1;
+} | int_literal {
+    $$ = $1;
+};
+
+block : '{' statement_list '}' {
+    $$ = $2;
 };
 
 function_call : identifier '(' ')' {
@@ -60,6 +91,14 @@ identifier : IDENTIFIER {
 
 string_literal : STRING_LITERAL {
     $$ = nodeStore->addNode(islc::NodeType::StringData, yytext, {});
+};
+
+int_literal : INT_LITERAL {
+    $$ = nodeStore->addNode(islc::NodeType::IntData, yytext, {});
+};
+
+range : expression '.''.' expression {
+    $$ = nodeStore->addNode(islc::NodeType::Range, "", {$1, $4});
 };
 
 %%

@@ -8,7 +8,7 @@ namespace islc
 {
     std::string Node::toString() const
     {
-        return "Node (" + std::to_string((int)type) + ", " + value + ")";
+        return "Node (" + ::islc::toString(type) + ", " + value + ")";
     }
 
     static std::unordered_map<NodeType, std::string> nodeTypes = {
@@ -22,6 +22,11 @@ namespace islc
         {NodeType::StringData, "StringData"},
         {NodeType::IdentifierData, "IdentifierData"},
         {NodeType::FunctionCall, "FunctionCall"},
+        {NodeType::IntData, "IntData"},
+        {NodeType::ForRangeStatement, "ForRangeStatement"},
+        {NodeType::In, "In"},
+        {NodeType::Expression, "Expression"},
+        {NodeType::Range, "Range"},
     };
 
     std::string toString(NodeType type)
@@ -34,6 +39,14 @@ namespace islc
         fmt::print(fmt::fg(fmt::color::yellow), "Warning: encountered unknown node type ({}) in {}\n", int(type), __FILE__);
 
         return "Unknown";
+    }
+
+    std::string Node::valueAsString() const {
+        return value.substr(1, value.size() - 2);
+    }
+
+    int Node::valueAsInt() const {
+        return std::stoi(value);
     }
 
 }

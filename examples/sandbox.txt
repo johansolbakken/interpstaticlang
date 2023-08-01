@@ -1,10 +1,10 @@
 
 func hello() {
-    println("Hello, World!")
+    println("Hello, World!");
 }
 
 func main() {
-    hello()
-    hello()
-    hello()
+    for i in 0..3 {
+        hello();
+    }
 }

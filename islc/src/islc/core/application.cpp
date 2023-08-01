@@ -5,6 +5,7 @@
 #include "islc/parser/parsecommand.h"
 
 #include "islc/debug/nodegraphwiz.h"
+#include "islc/debug/nodetree.h"
 
 #include "islc/simulation/astsimulation.h"
 
@@ -25,6 +26,7 @@ namespace islc
         ParseCommand::end();
 
         NodeGraphwiz::printAst(ast, "ast.png");
+        // NodeTree::printAst(ast);
 
         AstSimulation simulation(ast);
         simulation.run();

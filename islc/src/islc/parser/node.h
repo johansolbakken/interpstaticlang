@@ -15,8 +15,13 @@ namespace islc
         Statement,
         StatementList,
         PrintLnStatement,
+        ForRangeStatement,
+        In,
+        Expression,
+        Range,
         FunctionCall,
         StringData,
+        IntData,
         IdentifierData
     };
 
@@ -34,6 +39,9 @@ namespace islc
         }
 
         std::string toString() const;
+
+        std::string valueAsString() const;
+        int valueAsInt() const;
     };
 
 }
