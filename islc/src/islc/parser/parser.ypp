@@ -55,7 +55,7 @@ statement : println_statement ';' {
     $$ = $1;
 };
 
-println_statement : PRINTLN '(' string_literal ')' {
+println_statement : PRINTLN '(' expression ')' {
     $$ = nodeStore->addNode(islc::NodeType::PrintLnStatement, "", {$3});
 };
 
@@ -74,6 +74,8 @@ expression : expression '+' expression {
 } | function_call {
     $$ = $1;
 } | int_literal {
+    $$ = $1;
+} | string_literal {
     $$ = $1;
 };
 

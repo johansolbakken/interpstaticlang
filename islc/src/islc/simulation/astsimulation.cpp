@@ -12,7 +12,7 @@ namespace islc
         return scope;
     }
 
-    bool AstSimulation::Scope::set(const std::string &name, const std::string& value)
+    bool AstSimulation::Scope::set(const std::string &name, const std::string &value)
     {
         if (variables.find(name) != variables.end())
         {
@@ -83,7 +83,15 @@ namespace islc
         }
         else if (node->type == NodeType::PrintLnStatement)
         {
-            fmt::print("{}\n", node->children[0]->value.substr(1, node->children[0]->value.size() - 2));
+            auto data = node->children[0];
+            if (data->type == NodeType::StringData)
+            {
+                fmt::print("{}\n", node->children[0]->valueAsString());
+            } else if (data->type == NodeType::IdentifierData) {
+                fmt::print("{}\n", m_currentScope->get(data->value));
+            } else {
+                Application::get().error("Unknown data type in print statement");
+            }
         }
         else if (node->type == NodeType::FunctionCall)
         {
@@ -97,15 +105,18 @@ namespace islc
         }
         else if (node->type == NodeType::ForRangeStatement)
         {
-            auto variable = node->children[0]->valueAsString();
+            auto variable = node->children[0]->value;
             auto range = node->children[1];
             auto start = range->children[0]->valueAsInt();
             auto end = range->children[1]->valueAsInt();
 
+            m_currentScope = Scope::create(m_currentScope);
             for (int i = start; i < end; ++i)
             {
-                evaluate(node->children[2]);
+                m_currentScope->variables[variable] = std::to_string(i);
+                evaluate(node->children[2]->children[0]);
             }
+            m_currentScope = m_currentScope->parent;
         }
         else
         {
