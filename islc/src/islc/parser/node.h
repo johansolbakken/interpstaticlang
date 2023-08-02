@@ -23,7 +23,9 @@ namespace islc
         StringData,
         IntData,
         IdentifierData,
-        Block
+        Block,
+        VariableDeclaration,
+        VariableAssignment,
     };
 
     std::string toString(NodeType type);

@@ -28,6 +28,8 @@ namespace islc
         {NodeType::Expression, "Expression"},
         {NodeType::Range, "Range"},
         {NodeType::Block, "Block"},
+        {NodeType::VariableDeclaration, "VariableDeclaration"},
+        {NodeType::VariableAssignment, "VariableAssignment"},
     };
 
     std::string toString(NodeType type)

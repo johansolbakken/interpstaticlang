@@ -18,6 +18,7 @@ func                { return FUNCTION; }
 println             { return PRINTLN; }
 for                 { return FOR; }
 in                  { return IN; }
+let                 { return LET; }
 {IDENTIFIER}        { return IDENTIFIER; }
 .                   { return yytext[0]; }
 

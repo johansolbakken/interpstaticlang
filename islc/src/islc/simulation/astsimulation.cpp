@@ -87,9 +87,13 @@ namespace islc
             if (data->type == NodeType::StringData)
             {
                 fmt::print("{}\n", node->children[0]->valueAsString());
-            } else if (data->type == NodeType::IdentifierData) {
+            }
+            else if (data->type == NodeType::IdentifierData)
+            {
                 fmt::print("{}\n", m_currentScope->get(data->value));
-            } else {
+            }
+            else
+            {
                 Application::get().error("Unknown data type in print statement");
             }
         }
@@ -117,6 +121,28 @@ namespace islc
                 evaluate(node->children[2]->children[0]);
             }
             m_currentScope = m_currentScope->parent;
+        }
+        else if (node->type == NodeType::VariableDeclaration)
+        {
+            auto variable = node->children[0]->value;
+            auto valueType = node->children[1]->type;
+
+            if (valueType == NodeType::StringData)
+            {
+                m_currentScope->variables[variable] = node->children[1]->valueAsString();
+            }
+            else if (valueType == NodeType::IntData)
+            {
+                m_currentScope->variables[variable] = node->children[1]->value;
+            }
+            else if (valueType == NodeType::IdentifierData)
+            {
+                m_currentScope->variables[variable] = m_currentScope->get(node->children[1]->value);
+            }
+            else
+            {
+                Application::get().error("Unknown variable type");
+            }
         }
         else
         {

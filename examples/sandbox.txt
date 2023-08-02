@@ -1,11 +1,7 @@
-
-func hello() {
-    println("Hello, World!");
-}
-
 func main() {
+    let sum = 0;
     for i in 0..3 {
-        println(i);
-        hello();
+        sum = i;
     }
+    println(sum);
 }
