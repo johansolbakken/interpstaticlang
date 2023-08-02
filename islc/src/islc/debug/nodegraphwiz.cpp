@@ -33,8 +33,8 @@ namespace islc
                 {
                     value = value.substr(1, value.size() - 2);
                 }
-                ss << "    " << valueId << " [label=\"" << value << "\"];\n";
-                ss << "    " << nodeId << " -> " << valueId << ";\n";
+                ss << "    " << valueId << " [label=\"" << value << "\", style=filled, fillcolor=lightgray];\n";
+                ss << "    " << nodeId << " -> " << valueId << " [label=\"value\"];\n";
             }
 
             for (auto &child : node->children)
