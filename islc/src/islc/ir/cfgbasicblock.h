@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include "islc/ir/cfginstruction.h"
+
 namespace islc
 {
     enum class BlockType
@@ -16,5 +18,6 @@ namespace islc
         uint32_t id = 0;
         BlockType type = BlockType::Basic;
         std::vector<uint32_t> successors;
+        std::vector<CFGInstruction> instructions;
     };
 }

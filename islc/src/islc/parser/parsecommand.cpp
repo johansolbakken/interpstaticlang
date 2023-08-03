@@ -23,7 +23,31 @@ namespace islc
         yyparse();
     }
 
-    std::shared_ptr<Node> ParseCommand::root() {
+    std::shared_ptr<Node> ParseCommand::root()
+    {
         return nodeStore->getRoot();
+    }
+
+    void recursiveExtractStrings(StringList &list, const std::shared_ptr<Node> &node)
+    {
+        if (node->type == NodeType::StringData)
+        {
+            uint32_t id = list.add(node->valueAsString());
+            node->value = std::to_string(id);
+        }
+        else
+        {
+            for (const auto &child : node->children)
+            {
+                recursiveExtractStrings(list, child);
+            }
+        }
+    }
+
+    StringList ParseCommand::generateStringList()
+    {
+        StringList stringList;
+        recursiveExtractStrings(stringList, nodeStore->getRoot());
+        return stringList;
     }
 }

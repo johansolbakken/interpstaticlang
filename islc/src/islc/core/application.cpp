@@ -7,6 +7,7 @@
 #include "islc/debug/nodegraphwiz.h"
 #include "islc/debug/nodetree.h"
 #include "islc/debug/cfggraphwiz.h"
+#include "islc/debug/stringlisttext.h"
 
 #include "islc/simulation/astsimulation.h"
 
@@ -26,24 +27,18 @@ namespace islc
         ParseCommand::begin();
         ParseCommand::parse();
         auto ast = ParseCommand::root();
+        auto stringList = ParseCommand::generateStringList();
         ParseCommand::end();
 
         NodeGraphwiz::printAst(ast, "ast.png");
         // NodeTree::printAst(ast);
+        StringListText::printCsv(stringList, "stringlist.csv");
 
         // AstSimulation simulation(ast);
         // simulation.run();
 
         ControlFlowGraph cfg(ast);
         CFGGraphwiz::printCfg(cfg, "cfg.png");
-        for (const auto &block : cfg.basicBlocks())
-        {
-            fmt::print("Block {}:\n", block.id);
-            for (const auto &successor : block.successors)
-            {
-                fmt::print("    {}\n", successor);
-            }
-        }
     }
 
     void Application::error(const std::string &message) const
