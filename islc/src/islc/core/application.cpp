@@ -14,6 +14,8 @@
 
 #include "islc/ir/controlflowgraph.h"
 
+#include "islc/generator/generator.h"
+
 namespace islc
 {
     Application *Application::s_instance = nullptr;
@@ -44,6 +46,11 @@ namespace islc
 
         CfgSimulation cfgSimulation(cfg);
         cfgSimulation.run();
+
+        Generator generator(cfg, "main.c");
+        generator.generate();
+
+        system("gcc -o program main.c");
     }
 
     void Application::error(const std::string &message) const

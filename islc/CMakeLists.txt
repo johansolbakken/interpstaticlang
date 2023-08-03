@@ -35,6 +35,8 @@ add_executable(islc src/islc.cpp
     src/islc/ir/stringlist.h src/islc/ir/stringlist.cpp
     src/islc/ir/cfginstruction.h src/islc/ir/cfginstruction.cpp
 
+    src/islc/generator/generator.h src/islc/generator/generator.cpp
+
     ${BISON_parser_OUTPUTS} 
     ${FLEX_lexer_OUTPUTS}
 )
