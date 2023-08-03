@@ -3,6 +3,7 @@
 #include "islc/parser/node.h"
 
 #include "islc/ir/cfgbasicblock.h"
+#include "islc/ir/stringlist.h"
 
 #include <vector>
 
@@ -18,12 +19,16 @@ namespace islc
 
         const std::vector<CFGBasicBlock> &basicBlocks() const { return m_basicBlocks; }
 
+        void setStringList(const StringList &stringList) { m_stringList = stringList; }
+        const StringList &stringList() const { return m_stringList; }
+
     private:
         void build();
-        void buildRecursive(const std::shared_ptr<Node> &node, uint32_t parentId);
+        uint32_t buildRecursive(const std::shared_ptr<Node> &node, uint32_t parentId);
 
     private:
         std::shared_ptr<Node> m_root;
+        StringList m_stringList;
 
         std::vector<CFGBasicBlock> m_basicBlocks;
         uint32_t m_nextBasicBlockId = 0;

@@ -3,6 +3,8 @@
 #include <fstream>
 #include <sstream>
 
+#include "islc/core/base.h"
+
 namespace islc
 {
     // prints basic blocks as white squares. Entry block is green, exit block is red. Prints edges as black lines with arrowheads. Prints id inside block.
@@ -24,14 +26,30 @@ namespace islc
                 color = "red";
             }
 
-            dotStream << "    " << block.id << " [shape=box, style=filled, fillcolor=" << color << ", label=\"" << block.id << "\"];\n";
+            std::stringstream label;
+            label << block.id << "\n";
+            for (const auto &instruction : block.instructions)
+            {
+                std::string opcodeString = islc::toString(instruction.opcode);
+                if (opcodeString == "Unknown")
+                {
+                    fmt::print(fmt::fg(fmt::color::yellow), "Warning: Unknown opcode in CFGGraphwiz::printCfg\n");
+                }
+                label << opcodeString << " ";
+                for (const auto &operand : instruction.operands)
+                {
+                    label << operand << " ";
+                }
+                label << "\n";
+            }
+            dotStream << "    " << block.id << " [shape=box, style=filled, fillcolor=" << color << ", label=\"" << label.str() << "\"];\n";
         }
 
         for (const auto &block : cfg.basicBlocks())
         {
-            for (const auto &successor : block.successors)
+            for (const auto &successor : block.predecessors)
             {
-                dotStream << "    " << block.id << " -> " << successor << ";\n";
+                dotStream << "    " << successor << " -> " << block.id << ";\n";
             }
         }
 

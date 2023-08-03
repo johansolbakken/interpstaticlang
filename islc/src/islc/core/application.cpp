@@ -10,6 +10,7 @@
 #include "islc/debug/stringlisttext.h"
 
 #include "islc/simulation/astsimulation.h"
+#include "islc/simulation/cfgsimulation.h"
 
 #include "islc/ir/controlflowgraph.h"
 
@@ -38,7 +39,11 @@ namespace islc
         // simulation.run();
 
         ControlFlowGraph cfg(ast);
+        cfg.setStringList(stringList);
         CFGGraphwiz::printCfg(cfg, "cfg.png");
+
+        CfgSimulation cfgSimulation(cfg);
+        cfgSimulation.run();
     }
 
     void Application::error(const std::string &message) const

@@ -17,7 +17,7 @@ namespace islc
     {
         uint32_t id = 0;
         BlockType type = BlockType::Basic;
-        std::vector<uint32_t> successors;
+        std::vector<uint32_t> predecessors;
         std::vector<CFGInstruction> instructions;
     };
 }

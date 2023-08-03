@@ -1,7 +1,4 @@
 func main() {
-    let sum = 0;
-    for i in 0..3 {
-        sum = i;
-    }
-    println(sum);
+    println("Hello, World!");
+    println("Hello, World2!");
 }
