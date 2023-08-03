@@ -24,8 +24,12 @@ add_executable(islc src/islc.cpp
 
     src/islc/debug/nodegraphwiz.h src/islc/debug/nodegraphwiz.cpp
     src/islc/debug/nodetree.h src/islc/debug/nodetree.cpp
+    src/islc/debug/cfggraphwiz.h src/islc/debug/cfggraphwiz.cpp
 
     src/islc/simulation/astsimulation.h src/islc/simulation/astsimulation.cpp
+
+    src/islc/ir/controlflowgraph.h src/islc/ir/controlflowgraph.cpp
+    src/islc/ir/cfgbasicblock.h
 
     ${BISON_parser_OUTPUTS} 
     ${FLEX_lexer_OUTPUTS}

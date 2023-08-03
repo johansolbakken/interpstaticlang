@@ -6,8 +6,11 @@
 
 #include "islc/debug/nodegraphwiz.h"
 #include "islc/debug/nodetree.h"
+#include "islc/debug/cfggraphwiz.h"
 
 #include "islc/simulation/astsimulation.h"
+
+#include "islc/ir/controlflowgraph.h"
 
 namespace islc
 {
@@ -28,8 +31,19 @@ namespace islc
         NodeGraphwiz::printAst(ast, "ast.png");
         // NodeTree::printAst(ast);
 
-        AstSimulation simulation(ast);
-        simulation.run();
+        // AstSimulation simulation(ast);
+        // simulation.run();
+
+        ControlFlowGraph cfg(ast);
+        CFGGraphwiz::printCfg(cfg, "cfg.png");
+        for (const auto &block : cfg.basicBlocks())
+        {
+            fmt::print("Block {}:\n", block.id);
+            for (const auto &successor : block.successors)
+            {
+                fmt::print("    {}\n", successor);
+            }
+        }
     }
 
     void Application::error(const std::string &message) const
